@@ -28,6 +28,7 @@ def on_startup():
 
 app.include_router(routes.router, prefix="/api/v1")
 
+@app.head("/")
 @app.get("/")
 def health_check():
     return {"status": "healthy", "service": "rag-pipeline-api"}
