@@ -35,6 +35,12 @@ pypdf
 bs4
 sentence-transformers
 ipykernel
+fastapi
+uvicorn[standard]
+qdrant-client
+langchain
+openai
+python-dotenv
 
 #Groq INtegration
 langchain-groq
