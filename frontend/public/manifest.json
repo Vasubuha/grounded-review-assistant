@@ -1,0 +1,45 @@
+{
+  "manifest_version": 3,
+  "name": "Antigravity RAG Assistant",
+  "version": "1.0",
+  "description": "Side panel assistant that auto-detects smartphones on Amazon & Flipkart and answers RAG-powered questions.",
+  "permissions": [
+    "sidePanel",
+    "activeTab",
+    "tabs",
+    "scripting",
+    "storage"
+  ],
+  "host_permissions": [
+    "*://*.amazon.in/*",
+    "*://*.amazon.com/*",
+    "*://*.flipkart.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "side_panel": {
+    "default_path": "index.html"
+  },
+  "action": {
+    "default_title": "Open RAG Assistant"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.amazon.in/*",
+        "*://*.amazon.com/*",
+        "*://*.flipkart.com/*"
+      ],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["index.html", "assets/*"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

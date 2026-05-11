@@ -1,0 +1,42 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Environment
+.env
+
+# Databases
+*.db
+rag_pipeline.db
+
+# Vector DB
+qdrant_data/
+
+# Frontend
+node_modules/
+dist/
+build/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# VSCode
+.vscode/
+
+# Temporary outputs
+chat_output.json
+
+# Cache
+.cache/
+.pytest_cache/
+
+# Coverage
+htmlcov/
+.coverage

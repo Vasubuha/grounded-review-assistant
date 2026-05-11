@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 10px; width: 250px; }
+    button { padding: 8px 12px; cursor: pointer; background-color: #4CAF50; color: white; border: none; border-radius: 4px; width: 100%; }
+    button:hover { background-color: #45a049; }
+    #status { margin-top: 10px; font-size: 12px; color: #555; }
+    input[type="text"] { width: 100%; padding: 8px; margin-bottom: 10px; box-sizing: border-box; }
+  </style>
+</head>
+<body>
+  <h4>RAG Ingestor</h4>
+  <input type="text" id="productInput" placeholder="Loading title..." />
+  <button id="ingestBtn">Ingest Product</button>
+  <div id="status"></div>
+  <script src="popup.js"></script>
+</body>
+</html>
