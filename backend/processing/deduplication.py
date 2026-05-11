@@ -39,8 +39,8 @@ def store_document(payload) -> bool:
     """
     Stores a document in Qdrant if it's not a duplicate.
     """
-    from backend.schemas import DocumentPayload
-    from backend.observability.logger import log_duplicate_suppressed
+    from schemas import DocumentPayload
+    from observability.logger import log_duplicate_suppressed
     
     if not isinstance(payload, DocumentPayload):
         print("Invalid payload.")

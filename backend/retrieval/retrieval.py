@@ -90,7 +90,7 @@ def retrieve_context(query: str, product_id: str = None, top_k: int = 5) -> dict
     # Take top_k
     final_chunks = reranked_results[:top_k]
     
-    from backend.observability.logger import log_retrieval
+    from observability.logger import log_retrieval
     log_retrieval(query, final_chunks)
     
     # Debug Logging
