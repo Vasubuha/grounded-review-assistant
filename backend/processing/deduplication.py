@@ -1,5 +1,5 @@
-from backend.storage.qdrant_store import get_qdrant_client
-from backend.core.config import settings
+from storage.qdrant_store import get_qdrant_client
+from core.config import settings
 from langchain_huggingface import HuggingFaceEmbeddings
 import uuid
 import warnings

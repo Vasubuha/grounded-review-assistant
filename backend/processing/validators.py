@@ -1,7 +1,7 @@
 import hashlib
 from typing import Optional, Dict, Any
-from backend.schemas import DocumentPayload
-from backend.observability.logger import log_validation_failure
+from schemas import DocumentPayload
+from observability.logger import log_validation_failure
 
 JUNK_PHRASES = [
     "sign in", "privacy notice", "copyright", "terms of service", 

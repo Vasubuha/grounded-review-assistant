@@ -1,10 +1,10 @@
 from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException
 from pydantic import BaseModel, Field
 from sqlalchemy.orm import Session
-from backend.storage.database import get_db
-from backend.storage.qdrant_store import get_qdrant_client
-from backend.core.config import settings
-from backend.processing.deduplication import embeddings_model
+from storage.database import get_db
+from storage.qdrant_store import get_qdrant_client
+from core.config import settings
+from processing.deduplication import embeddings_model
 
 router = APIRouter()
 

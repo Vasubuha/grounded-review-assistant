@@ -1,12 +1,12 @@
 import asyncio
 from sqlalchemy.orm import Session
-from backend.processing.normalization import normalize_product_name
-from backend.ingestion.expander import expand_sources
-from backend.ingestion.scrapers import scrape_url
-from backend.processing.deduplication import store_document
-from backend.storage.database import Product, IngestionState
+from processing.normalization import normalize_product_name
+from ingestion.expander import expand_sources
+from ingestion.scrapers import scrape_url
+from processing.deduplication import store_document
+from storage.database import Product, IngestionState
 from transformers import pipeline
-from backend.processing.validators import validate_and_normalize_chunk
+from processing.validators import validate_and_normalize_chunk
 
 # Load local sentiment model for reviews
 sentiment_analyzer = pipeline("sentiment-analysis", model="distilbert-base-uncased-finetuned-sst-2-english")
