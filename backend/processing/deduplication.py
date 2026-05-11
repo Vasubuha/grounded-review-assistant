@@ -1,13 +1,13 @@
 from storage.qdrant_store import get_qdrant_client
 from core.config import settings
-from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_huggingface import HuggingFaceEmbeddings,HuggingFaceEndpointEmbeddings
 import uuid
 import warnings
 
 # Suppress some transformers warnings
 warnings.filterwarnings("ignore")
 
-embeddings_model = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
+embeddings_model = HuggingFaceEndpointEmbeddings(model_name="all-MiniLM-L6-v2")
 
 def is_duplicate(vector: list[float], product_id: str, threshold: float = 0.98) -> bool:
     """
