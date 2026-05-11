@@ -5,11 +5,22 @@ from ingestion.expander import expand_sources
 from ingestion.scrapers import scrape_url
 from processing.deduplication import store_document
 from storage.database import Product, IngestionState
-from transformers import pipeline
 from processing.validators import validate_and_normalize_chunk
-
-# Load local sentiment model for reviews
-sentiment_analyzer = pipeline("sentiment-analysis", model="distilbert-base-uncased-finetuned-sst-2-english")
+# Use a lightweight heuristic for sentiment to avoid Out of Memory (OOM) 
+# and remove heavy PyTorch/transformers dependencies on Render's 512MB tier.
+def get_sentiment(text: str) -> dict:
+    text_lower = text.lower()
+    negative_words = ["bad", "terrible", "worst", "hate", "slow", "lag", "drain", "issue", "problem", "heat", "warm", "poor", "awful", "bug", "glitch", "crash", "overheat"]
+    positive_words = ["good", "great", "best", "love", "fast", "smooth", "excellent", "amazing", "awesome", "perfect", "solid", "impressive", "brilliant"]
+    
+    neg_count = sum(1 for w in negative_words if w in text_lower)
+    pos_count = sum(1 for w in positive_words if w in text_lower)
+    
+    if neg_count > pos_count:
+        return {"label": "NEGATIVE", "score": 0.8 + (neg_count * 0.05)}
+    elif pos_count > neg_count:
+        return {"label": "POSITIVE", "score": 0.8 + (pos_count * 0.05)}
+    return {"label": "NEUTRAL", "score": 0.5}
 
 def classify_taxonomy(text: str) -> list[str]:
     """Simple heuristic-based taxonomy classification for prototype."""
@@ -51,7 +62,7 @@ async def process_source(url: str, source_type: str, product_id: str, canonical_
             # Run sentiment only on reviews, not specs
             if source_type != "spec":
                 try:
-                    sentiment = sentiment_analyzer(chunk[:512])[0] # Truncate for model limit
+                    sentiment = get_sentiment(chunk[:512])
                     metadata["sentiment"] = sentiment["label"].upper()
                     metadata["sentiment_score"] = sentiment["score"]
                 except Exception as e:
@@ -162,7 +173,7 @@ async def process_structured_reviews(product_query: str, platform: str, url: str
         }
         
         try:
-            sentiment = sentiment_analyzer(chunk[:512])[0]
+            sentiment = get_sentiment(chunk[:512])
             metadata["sentiment"] = sentiment["label"].upper()
             metadata["sentiment_score"] = sentiment["score"]
         except Exception:
