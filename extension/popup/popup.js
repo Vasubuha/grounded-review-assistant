@@ -67,9 +67,12 @@ document.addEventListener('DOMContentLoaded', () => {
             });
           }
         });
-      } else {
-        const errorData = await response.json();
-        status.textContent = "Error: " + (errorData.detail || "Failed to start ingestion.");
+      }else {
+        const errorText = await response.text();
+        console.error("Backend Error:", errorText);
+
+        status.textContent =
+          "Backend error: " + response.status;
       }
     } catch (error) {
       status.textContent = "Error connecting to backend.";
