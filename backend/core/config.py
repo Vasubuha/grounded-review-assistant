@@ -23,8 +23,8 @@ class Settings:
     # API Keys
     GROQ_API_KEY = os.getenv("GROQ_API_KEY")
     GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
-    HUGGINGFACEHUB_API_TOKEN = os.getenv(
-        "HUGGINGFACEHUB_API_TOKEN"
+    HF_TOKEN = os.getenv(
+        "HF_TOKEN"
     )
 
 settings = Settings()
