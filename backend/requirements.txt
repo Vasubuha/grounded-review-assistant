@@ -2,8 +2,6 @@ fastapi
 uvicorn[standard]
 langchain
 langchain-community
-langchain-openai
-openai
 qdrant-client
 sentence-transformers
 python-dotenv
@@ -20,3 +18,11 @@ webdriver-manager
 aiohttp
 httpx
 youtube_transcript_api
+grandalf
+langchain-huggingface
+transformers
+huggingface-hub
+langchain-core
+langchain-community
+langchain-text-splitters
+langchain-experimental
