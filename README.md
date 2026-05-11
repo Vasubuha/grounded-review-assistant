@@ -1,224 +1,124 @@
-# 🚀 Quick Start Guide - Side Panel RAG Assistant
+# 📱 Smartphone Review Intelligence — Grounded RAG System
 
-Get the extension running in **5 minutes**!
+[![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi)](https://fastapi.tiangolo.com/)
+[![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)](https://reactjs.org/)
+[![Chrome Extensions](https://img.shields.io/badge/chrome_extension-4285F4?style=for-the-badge&logo=google-chrome&logoColor=white)](https://developer.chrome.com/docs/extensions/)
+[![LangChain](https://img.shields.io/badge/LangChain-1C3C3C?style=for-the-badge&logo=langchain&logoColor=white)](https://langchain.com/)
+[![Qdrant](https://img.shields.io/badge/Qdrant-FE405F?style=for-the-badge&logo=qdrant&logoColor=white)](https://qdrant.tech/)
+[![Gemini](https://img.shields.io/badge/Google_Gemini-8E75B2?style=for-the-badge&logo=googlebard&logoColor=white)](https://deepmind.google/technologies/gemini/)
 
-## Prerequisites Check ✅
+**A browser-native multi-source Retrieval-Augmented Generation (RAG) system that automatically captures, ingests, and analyzes smartphone reviews and specs while you browse.**
 
-```bash
-# Check Node.js
-node --version  # Should be v18+
+## 🏗 Architecture
 
-# Check Python
-python --version  # Should be v3.10+
+![RAG System Architecture](demo/architecture.png)
 
-# Check npm
-npm --version  # Should be v9+
-```
+## 🌟 Overview
 
-## Step 1: Start the Backend (1 min)
+The Smartphone Review Intelligence system is designed to provide users with grounded, instant, and factual answers about smartphones while browsing e-commerce platforms like Amazon or Flipkart. By injecting a seamless Side Panel UI directly into the browser, it creates an autonomous RAG ingestion pipeline that extracts reviews, dedupes them, semantically chunks the data, and stores it in a vector database for real-time inference.
+
+Unlike generic chatbots, this system is **context-aware**. It detects the smartphone you are currently viewing and retrieves insights specifically grounded in verified reviews, specs, and YouTube transcripts.
+
+## ✨ Key Features
+
+- **Browser-Native Ingestion**: Automatically captures DOM structure and dispatches structured data to the backend via a Chrome Extension.
+- **Multi-Source Knowledge Graph**: Aggregates data from Amazon, Flipkart, GSMArena, and YouTube transcripts.
+- **Intelligent RAG Pipeline**:
+  - Deterministic Identity Normalizer ensures exact product matching.
+  - Strict Schema Validation & Deduplication.
+  - Semantic chunking with Metadata Enrichment (tags, sentiment, brand).
+- **Advanced Retrieval**: Utilizes HuggingFace `sentence-transformers` for dense embeddings and a Qdrant Vector DB, paired with Cross-Encoder Reranking for high-precision retrieval.
+- **Grounded Inference**: Leverages Google Gemini / Groq LLMs to provide citation-backed responses and retrieval diagnostics.
+- **Frictionless UI**: A React-powered Chrome Side Panel that opens automatically when a product is detected.
+
+## 🛠 Tech Stack
+
+### 🔹 Core AI & Backend (Python)
+- **Framework:** FastAPI
+- **LLM Orchestration:** LangChain
+- **Embeddings:** HuggingFace `sentence-transformers`
+- **Vector Database:** Qdrant
+- **Inference Models:** Google Gemini / Groq / OpenAI
+- **Data Persistence:** SQLite (for robust metadata tracking)
+
+### 🔹 Frontend & Browser Extension (JavaScript / TypeScript)
+- **Extension API:** Chrome Manifest V3 (Background Service Workers, Content Scripts, Side Panel API)
+- **UI Framework:** React 19 (via Vite)
+- **Styling:** Tailwind CSS v4, Lucide React icons
+
+## 🚀 Quick Start Guide
+
+Get the system running locally in **5 minutes**!
+
+### Prerequisites
+- **Node.js** (v18+)
+- **Python** (v3.10+)
+- **Chrome Browser** (v120+)
+
+### 1. Start the Backend API
 
 ```bash
 cd d:\langchain_model
 
-# Activate Python environment
+# Activate your Python virtual environment
 venv\Scripts\activate
 
-# Start FastAPI server
+# Start the FastAPI orchestrator
 python -m backend.main
 ```
+✅ Verify: Open http://localhost:8000/docs for the Swagger UI.
 
-✅ Backend should start on `http://localhost:8000`
+### 2. Start the Frontend UI
 
-**Verify:** Open http://localhost:8000/docs in browser - should see FastAPI Swagger UI
-
----
-
-## Step 2: Start the Frontend (1 min)
-
-**Terminal 2:**
 ```bash
 cd d:\langchain_model\frontend
 
-# Install dependencies (first time only)
+# Install dependencies
 npm install
 
-# Start dev server
+# Start the Vite dev server
 npm run dev
 ```
+✅ Verify: The chat UI should be accessible at http://localhost:5173.
 
-✅ Frontend should be at `http://localhost:5173`
+### 3. Load the Chrome Extension
 
-**Verify:** Open http://localhost:5173 in browser - should see chat UI
+1. Open Chrome and navigate to `chrome://extensions/`.
+2. Enable **Developer mode** (top right corner).
+3. Click **Load unpacked**.
+4. Select the folder: `d:\langchain_model\extension`.
+5. Ensure the extension icon appears in your toolbar.
 
----
+### 4. Experience the Demo
 
-## Step 3: Load Extension in Chrome (2 min)
+1. Open a new Chrome tab.
+2. Navigate to **Amazon** (e.g., [Search for a phone](https://www.amazon.in/s?k=phone)).
+3. Click on any smartphone listing.
+4. 🎉 **The AI Side Panel opens automatically!**
+5. Ask questions like:
+   - *"What are the key specs?"*
+   - *"Summarize the camera reviews."*
+   - *"What are the pros and cons based on customer feedback?"*
 
-1. Open Chrome
-2. Go to **chrome://extensions/**
-3. Toggle **Developer mode** (top right)
-4. Click **Load unpacked**
-5. Select: `d:\langchain_model\extension`
-6. ✅ Extension loaded!
-
-**Verify:** Extension icon appears in Chrome toolbar
-
----
-
-## Step 4: Test It! (1 min)
-
-1. **Open a new Chrome tab**
-2. **Go to Amazon or Flipkart:**
-   - Amazon: https://www.amazon.in/s?k=phone
-   - Flipkart: https://www.flipkart.com/search?q=phone
-3. **Click a product** (any phone listing)
-4. 🎉 **Side panel should open automatically on the right!**
-5. **Type a question:**
-   - "What are the specs?"
-   - "Tell me about battery life"
-   - "Pros and cons of this phone?"
-6. 🤖 **Get instant AI response with sources!**
-
----
-
-## Troubleshooting
-
-### Side Panel Not Opening?
-- [ ] Check Chrome version: `chrome://version/` (must be 120+)
-- [ ] Go to `chrome://extensions/` and reload the extension
-- [ ] Check background logs: Extensions → Select extension → Inspect views → service worker
-
-### Product Not Detected?
-- [ ] Right-click page → Inspect → Console
-- [ ] Look for: `[Content script] Product detected`
-- [ ] Try Amazon instead of Flipkart (better selector support)
-- [ ] Refresh page and try again
-
-### Backend Connection Failed?
-- [ ] Verify backend running: `curl http://localhost:8000/docs`
-- [ ] Check if FastAPI is on localhost:8000
-- [ ] Check firewall isn't blocking port 8000
-- [ ] Restart backend: Stop and run again
-
-### No Response from Chat?
-- [ ] Make sure product was ingested (check backend logs)
-- [ ] Try simpler question: "Tell me about this phone"
-- [ ] Restart both backend and refresh browser
-- [ ] Check Qdrant is running (backend depends on it)
-
----
-
-## File Locations Quick Ref
+## 📁 Directory Structure
 
 ```
 d:\langchain_model\
-├── extension/              # Chrome extension files ✅
-│   ├── manifest.json       # Extension configuration
-│   ├── background.js       # Auto-detection logic
-│   ├── content.js          # Product extraction
-│   ├── side-panel.html     # Side panel UI
-│   ├── side-panel.js       # Side panel logic
-│   ├── popup.html
-│   └── popup.js
-├── frontend/               # React app ✅
-│   ├── src/
-│   │   └── App.tsx        # Updated for side panel
-│   ├── package.json
-│   └── vite.config.ts
-├── backend/                # FastAPI backend ✅
-│   ├── main.py
-│   └── api/routes.py
-├── EXTENSION_SETUP.md      # Full setup guide 📖
-├── CHANGES_SUMMARY.md      # What changed 📝
-└── requirements.txt        # Python dependencies
+├── backend/                # FastAPI backend & RAG orchestrator
+├── frontend/               # React application (Side Panel UI)
+├── extension/              # Chrome Extension source code
+├── demo/                   # Demo assets and architectural diagrams
+├── docs/                   # Documentation
+├── tests/                  # Test suites
+├── requirements.txt        # Python dependencies
+└── README.md               # Project overview
 ```
 
----
+## 🔍 Troubleshooting & Documentation
 
-## Architecture Overview
-
-```
-Shopping Page
-     ↓
-[Content Script] Detects product
-     ↓
-[Background Script] Auto-ingests & opens side panel
-     ↓
-[Side Panel] Displays React app in iframe
-     ↓
-[React App] Sends queries to backend
-     ↓
-[FastAPI] Processes RAG pipeline
-     ↓
-[Response] Displayed in side panel with sources!
-```
+- **Side Panel won't open?** Ensure you're on Chrome v120+ and check the extension's service worker logs.
+- **Backend errors?** Confirm Qdrant is accessible and environment variables `.env` are configured properly.
+- For detailed setup, troubleshooting, and API reference, see [EXTENSION_SETUP.md](EXTENSION_SETUP.md).
 
 ---
-
-## Common Commands
-
-```bash
-# Kill backend
-# Ctrl+C in the terminal
-
-# Reload extension
-# Chrome DevTools: Extensions → Select extension → Reload button
-# Or press F5 on extensions page
-
-# View logs
-# Chrome: chrome://extensions/ → Select extension → Inspect views
-
-# Reset extension storage
-chrome://extensions/
-Select extension → Details → Manage extension storage → Clear data
-
-# Check Qdrant
-curl http://localhost:6333/collections
-
-# Check backend endpoints
-curl http://localhost:8000/api/v1/ingest
-
-# Build frontend for production
-cd frontend && npm run build
-```
-
----
-
-## What's New?
-
-✨ **Original Features Still Work:**
-- Popup ingestion (click extension icon)
-- Standalone React app at localhost:5173
-- Manual product queries
-
-✨ **NEW Side Panel Features:**
-- Auto-detection on Amazon/Flipkart
-- Auto-ingestion in background
-- Side panel opens automatically
-- Chat without leaving product page
-- No manual setup needed!
-
----
-
-## Next: Full Documentation
-
-For detailed setup, troubleshooting, API reference, and production deployment:
-
-👉 See [EXTENSION_SETUP.md](EXTENSION_SETUP.md)
-
----
-
-## Support
-
-Having issues? 
-1. Check console logs: `chrome://extensions/` → Extensions → Inspect service worker
-2. Verify all services running:
-   - Backend: http://localhost:8000/docs
-   - Frontend: http://localhost:5173
-   - Qdrant: http://localhost:6333
-3. Try reloading extension and refreshing page
-4. Check [EXTENSION_SETUP.md](EXTENSION_SETUP.md) troubleshooting section
-
----
-
-**Enjoy your AI-powered side panel assistant! 🚀**
+*Built with 🩵 for grounded and factual AI interactions.*
