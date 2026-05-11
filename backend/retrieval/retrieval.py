@@ -2,10 +2,8 @@ from storage.qdrant_store import get_qdrant_client
 from processing.deduplication import embeddings_model
 from core.config import settings
 from qdrant_client.models import Filter, FieldCondition, MatchValue
-from sentence_transformers import CrossEncoder
-
-# Load CrossEncoder for reranking. We use a lightweight model to keep it fast.
-reranker = CrossEncoder('cross-encoder/ms-marco-MiniLM-L-6-v2')
+# CrossEncoder removed to prevent Out of Memory (OOM) errors on 512MB Render instances.
+# We will use Qdrant's native vector similarity score instead.
 
 def classify_intent(query: str) -> str:
     """Lightweight intent classifier based on keywords."""
@@ -58,22 +56,17 @@ def retrieve_context(query: str, product_id: str = None, top_k: int = 5) -> dict
             "message": "insufficient product data available"
         }
         
-    # 2. Rerank with CrossEncoder and Intent Weighting
-    # CrossEncoder expects pairs: (query, text)
-    pairs = [(query, res.payload.get("text", "")) for res in search_result]
-    cross_scores = reranker.predict(pairs)
-    
     # Combine results with scores and apply intent-based heuristics
     reranked_results = []
     for idx, res in enumerate(search_result):
-        score = cross_scores[idx]
+        score = res.score
         payload = res.payload
         
         # Intent-based boosting
         if intent == "issue" and payload.get("sentiment") == "NEGATIVE":
-            score += 2.0  # Boost negative reviews for issue queries
+            score += 0.2  # Boost negative reviews for issue queries (scaled for vector score)
         elif intent == "spec" and payload.get("doc_type") == "spec":
-            score += 2.0  # Boost specs for spec queries
+            score += 0.2  # Boost specs for spec queries (scaled for vector score)
             
         reranked_results.append({
             "text": payload.get("text", ""),

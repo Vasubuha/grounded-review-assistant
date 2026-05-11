@@ -3,7 +3,7 @@ uvicorn[standard]
 langchain
 langchain-community
 qdrant-client
-sentence-transformers
+
 python-dotenv
 pypdf
 tiktoken
@@ -20,7 +20,7 @@ httpx
 youtube_transcript_api
 grandalf
 langchain-huggingface
-transformers
+
 huggingface-hub
 langchain-core
 langchain-community

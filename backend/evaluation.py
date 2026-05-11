@@ -1,10 +1,14 @@
-from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_huggingface import HuggingFaceEndpointEmbeddings
+from core.config import settings
 import numpy as np
 import warnings
 
 warnings.filterwarnings("ignore")
 
-embeddings_model = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
+embeddings_model = HuggingFaceEndpointEmbeddings(
+    model="sentence-transformers/all-MiniLM-L6-v2",
+    huggingfacehub_api_token=settings.HF_TOKEN
+)
 
 def cosine_similarity(vec_a, vec_b):
     dot_product = np.dot(vec_a, vec_b)
