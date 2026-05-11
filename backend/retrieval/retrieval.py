@@ -1,6 +1,6 @@
-from backend.storage.qdrant_store import get_qdrant_client
-from backend.processing.deduplication import embeddings_model
-from backend.core.config import settings
+from storage.qdrant_store import get_qdrant_client
+from processing.deduplication import embeddings_model
+from core.config import settings
 from qdrant_client.models import Filter, FieldCondition, MatchValue
 from sentence_transformers import CrossEncoder
 

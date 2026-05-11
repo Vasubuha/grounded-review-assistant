@@ -1,6 +1,6 @@
 from qdrant_client import QdrantClient
 from qdrant_client.models import Distance, VectorParams
-from backend.core.config import settings
+from core.config import settings
 import os
 
 # Ensure data directory exists

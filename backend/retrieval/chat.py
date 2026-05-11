@@ -1,6 +1,6 @@
 from langchain_groq import ChatGroq
 from langchain_core.prompts import ChatPromptTemplate
-from backend.retrieval.retrieval import retrieve_context
+from retrieval.retrieval import retrieve_context
 
 def format_context(chunks: list) -> str:
     """Aggressively groups and formats retrieved chunks to prevent noisy prompts."""
