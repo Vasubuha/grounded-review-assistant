@@ -1,0 +1,52 @@
+# LangChain Core
+langchain
+langchain-core
+langchain-community
+langchain-text-splitters
+langchain-experimental
+
+# OpenAI Integration
+langchain-openai
+openai
+
+# Anthropic Integration
+langchain-anthropic
+
+# Google Gemini (PaLM) Integration
+langchain-google-genai
+google-generativeai
+
+# Hugging Face Integration
+langchain-huggingface
+transformers
+huggingface-hub
+
+# Environment Variable Management
+python-dotenv
+
+# Machine Learning Utilities
+numpy
+scikit-learn
+torch
+tensorflow
+streamlit
+pydantic
+pypdf
+bs4
+sentence-transformers
+ipykernel
+fastapi
+uvicorn[standard]
+qdrant-client
+langchain
+openai
+python-dotenv
+
+#Groq INtegration
+langchain-groq
+
+#graph visualization
+grandalf
+
+#youtube transcript
+youtube-transcript-api
