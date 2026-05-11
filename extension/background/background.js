@@ -1,6 +1,6 @@
 // Service worker (background script) - handles detection, ingestion, and message routing
 
-const BACKEND_URL = 'http://localhost:8000';
+const BACKEND_URL = 'https://grounded-review-assistant.onrender.com';
 const INGEST_ENDPOINT = '/api/v1/ingest';
 
 /**

@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
     status.textContent = "Sending to backend...";
 
     try {
-      const response = await fetch('http://localhost:8000/api/v1/ingest', {
+      const response = await fetch('https://grounded-review-assistant.onrender.com/api/v1/ingest', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

@@ -1,6 +1,6 @@
 // Side Panel Script - Manages communication, state, and UI for the assistant panel
 
-const BACKEND_URL = 'http://localhost:8000';
+const BACKEND_URL = 'https://grounded-review-assistant.onrender.com';
 const CHAT_ENDPOINT = '/api/v1/chat';
 
 /**
@@ -84,7 +84,7 @@ function loadReactApp(productName) {
   // Create iframe for React app
   const iframe = document.createElement('iframe');
   iframe.id = 'react-app-iframe';
-  iframe.src = 'http://localhost:5173'; // Vite dev server or built frontend
+  iframe.src = 'https://grounded-review-assistant-8vb2i5u2n-vasubuhas-projects.vercel.app'; // Vite dev server or built frontend
   iframe.sandbox.add('allow-same-origin');
   iframe.sandbox.add('allow-scripts');
   iframe.sandbox.add('allow-forms');

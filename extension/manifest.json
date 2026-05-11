@@ -15,10 +15,10 @@
   "host_permissions": [
     "https://*.amazon.in/*",
     "https://*.amazon.com/*",
-    "https://*.flipkart.com/*",
     "https://*.amazon.co.in/*",
-    "http://localhost:*/*",
-    "http://127.0.0.1:*/*"
+    "https://*.flipkart.com/*",
+    "https://grounded-review-assistant.onrender.com/*",
+    "https://grounded-review-assistant-8vb2i5u2n-vasubuhas-projects.vercel.app/*"
   ],
 
   "background": {
@@ -30,10 +30,8 @@
       "matches": [
         "https://*.amazon.in/*",
         "https://*.amazon.com/*",
-        "https://*.flipkart.com/*",
         "https://*.amazon.co.in/*",
-        "http://localhost:*/*",
-        "http://127.0.0.1:*/*"
+        "https://*.flipkart.com/*"
       ],
       "js": [
         "content/content.js"
@@ -47,5 +45,9 @@
 
   "action": {
     "default_popup": "popup/popup.html"
+  },
+
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; frame-src https://grounded-review-assistant-8vb2i5u2n-vasubuhas-projects.vercel.app"
   }
 }
