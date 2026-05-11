@@ -11,3 +11,11 @@ pypdf
 tiktoken
 langchain-groq
 ddgs
+requests
+beautifulsoup4
+lxml
+fake-useragent
+selenium
+webdriver-manager
+aiohttp
+httpx
