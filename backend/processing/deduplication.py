@@ -7,7 +7,10 @@ import warnings
 # Suppress some transformers warnings
 warnings.filterwarnings("ignore")
 
-embeddings_model = HuggingFaceEndpointEmbeddings(model_name="all-MiniLM-L6-v2")
+embeddings_model = HuggingFaceEndpointEmbeddings(
+    model="sentence-transformers/all-MiniLM-L6-v2",
+    huggingfacehub_api_token=settings.HUGGINGFACEHUB_API_TOKEN
+)
 
 def is_duplicate(vector: list[float], product_id: str, threshold: float = 0.98) -> bool:
     """
