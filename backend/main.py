@@ -2,6 +2,10 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from api import routes
 from storage.database import init_db
+import os
+
+print("Application starting...")
+print("PORT:", os.getenv("PORT"))
 
 app = FastAPI(title="RAG Data Pipeline API", version="1.0.0")
 
@@ -18,8 +22,9 @@ app.add_middleware(
 def on_startup():
     try:
         init_db()
+        print("Database initialized")
     except Exception as e:
-        print(f"Database init failed: {e}")
+        print(f"Startup error: {e}")
 
 app.include_router(routes.router, prefix="/api/v1")
 
