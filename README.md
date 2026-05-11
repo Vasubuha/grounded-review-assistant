@@ -11,7 +11,7 @@
 
 ## 🏗 Architecture
 
-![RAG System Architecture]("D:\langchain_model\demo\architecture.png")
+![RAG System Architecture](./demo/diagram-export-5-11-2026-4_16_29-PM.png)
 
 ## 🌟 Overview
 
