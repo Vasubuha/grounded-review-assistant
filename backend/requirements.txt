@@ -19,3 +19,4 @@ selenium
 webdriver-manager
 aiohttp
 httpx
+youtube_transcript_api
