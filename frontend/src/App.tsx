@@ -47,11 +47,14 @@ const App = () => {
             console.log('[App] Setting product from side panel:', message.productName);
             setProductId(message.productName);
             setRecentProducts(prev => {
-              if (!prev.includes(message.productName)) {
-                return [message.productName, ...prev].slice(0, 5);
-              }
-              return prev;
-            });
+              const product = message.productName ?? "";
+
+            if (product && !prev.includes(product)) {
+              return [product, ...prev].slice(0, 5);
+          }
+
+          return prev;
+        });
           }
         } else if (message.type === 'UPDATE_PRODUCT') {
           // Update product when changed on shopping page
@@ -59,20 +62,25 @@ const App = () => {
             console.log('[App] Updating product from side panel:', message.productName);
             setProductId(message.productName);
             setRecentProducts(prev => {
-              if (!prev.includes(message.productName)) {
-                return [message.productName, ...prev].slice(0, 5);
+              const product = message.productName ?? "";
+
+              if (product && !prev.includes(product)) {
+                return [product, ...prev].slice(0, 5);
               }
+
               return prev;
             });
           }
         } else if (message.type === 'CHAT_RESPONSE') {
           // Handle async chat responses
+          if (!message.requestId) return;
+
           const callback = pendingChatRequests.get(message.requestId);
           if (callback) {
             callback(message.response);
             setPendingChatRequests(prev => {
               const newMap = new Map(prev);
-              newMap.delete(message.requestId);
+              newMap.delete(message.requestId!);
               return newMap;
             });
           }
@@ -99,9 +107,12 @@ const App = () => {
           if (request.type === 'PRODUCT_DETECTED' && request.productName) {
             setProductId(request.productName);
             setRecentProducts(prev => {
-              if (!prev.includes(request.productName)) {
-                return [request.productName, ...prev].slice(0, 5);
+              const product = request.productName ?? "";
+
+              if (product && !prev.includes(product)) {
+                return [product, ...prev].slice(0, 5);
               }
+
               return prev;
             });
           }
@@ -114,10 +125,13 @@ const App = () => {
           if (event.data.type === 'FROM_EXTENSION' && event.data.contentType === 'PRODUCT_DETECTED' && event.data.productName) {
             setProductId(event.data.productName);
             setRecentProducts(prev => {
-              if (!prev.includes(event.data.productName)) {
-                return [event.data.productName, ...prev].slice(0, 5);
+              const product = event.data.productName ?? "";
+
+              if (product && !prev.includes(product)) {
+                return [product, ...prev].slice(0, 5);
               }
-              return prev;
+
+            return prev;
             });
           }
         };
@@ -130,9 +144,12 @@ const App = () => {
           if (response && response.productName) {
             setProductId(response.productName);
             setRecentProducts(prev => {
-              if (!prev.includes(response.productName)) {
-                return [response.productName, ...prev].slice(0, 5);
-              }
+              const product = response.productName ?? "";
+
+              if (product && !prev.includes(product)) {
+                return [product, ...prev].slice(0, 5);
+              } 
+
               return prev;
             });
           }
