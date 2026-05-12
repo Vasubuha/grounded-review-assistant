@@ -24,7 +24,8 @@ export const sendChatQuery = async (query: string, productId?: string): Promise<
       payload.product_id = productId;
     }
 
-    const res = await fetch('http://127.0.0.1:8000/api/v1/chat', {
+    const baseUrl = import.meta.env.VITE_API_URL || 'https://grounded-review-assistant.onrender.com';
+    const res = await fetch(`${baseUrl}/api/v1/chat`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),

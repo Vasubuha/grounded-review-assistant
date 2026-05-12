@@ -16,7 +16,7 @@ export const DiagnosticPanel = () => {
   const fetchLogs = async () => {
     setLoading(true);
     try {
-      const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+      const baseUrl = import.meta.env.VITE_API_URL || 'https://grounded-review-assistant.onrender.com';
       const res = await fetch(`${baseUrl}/api/v1/diagnostics`);
       if (res.ok) {
         const data = await res.json();

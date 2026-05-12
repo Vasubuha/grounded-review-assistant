@@ -18,7 +18,7 @@
     "https://*.amazon.co.in/*",
     "https://*.flipkart.com/*",
     "https://grounded-review-assistant.onrender.com/*",
-    "https://grounded-review-assistant-8vb2i5u2n-vasubuhas-projects.vercel.app/*"
+    "https://grounded-review-assistant.vercel.app/*"
   ],
 
   "background": {
@@ -48,6 +48,6 @@
   },
 
   "content_security_policy": {
-    "extension_pages": "script-src 'self'; object-src 'self'; frame-src https://grounded-review-assistant-8vb2i5u2n-vasubuhas-projects.vercel.app"
+    "extension_pages": "script-src 'self'; object-src 'self'; frame-src https://grounded-review-assistant.vercel.app"
   }
 }

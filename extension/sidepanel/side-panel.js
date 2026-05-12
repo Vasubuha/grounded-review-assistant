@@ -84,7 +84,7 @@ function loadReactApp(productName) {
   // Create iframe for React app
   const iframe = document.createElement('iframe');
   iframe.id = 'react-app-iframe';
-  iframe.src = 'https://grounded-review-assistant-8vb2i5u2n-vasubuhas-projects.vercel.app'; // Vite dev server or built frontend
+  iframe.src = 'https://grounded-review-assistant.vercel.app'; // Vite dev server or built frontend
   iframe.sandbox.add('allow-same-origin');
   iframe.sandbox.add('allow-scripts');
   iframe.sandbox.add('allow-forms');
