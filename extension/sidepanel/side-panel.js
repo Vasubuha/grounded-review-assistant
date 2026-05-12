@@ -186,7 +186,12 @@ async function forwardChatRequest(query, productName) {
  * Listen for messages from the React app
  */
 window.addEventListener('message', (event) => {
-  if (event.source.frameElement?.id !== 'react-app-iframe') {
+  const trustedOrigins = [
+    'https://grounded-review-assistant.vercel.app',
+    'http://localhost:5173',
+    'http://localhost:5174'
+  ];
+  if (!trustedOrigins.includes(event.origin)) {
     return;
   }
 

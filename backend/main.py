@@ -26,6 +26,8 @@ app.add_middleware(
 def on_startup():
     try:
         init_db()
+        from storage.qdrant_store import init_qdrant
+        init_qdrant()
         print("Database initialized")
     except Exception as e:
         print(f"Startup error: {e}")
