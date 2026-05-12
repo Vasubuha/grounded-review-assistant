@@ -38,44 +38,70 @@ async def scrape_flipkart(url: str) -> list[str]:
     chunks = chunk_text(text)
     return chunks[:15] if chunks else []
 
+# async def scrape_youtube(url: str) -> list[str]:
+#     print(f"Scraping YouTube: {url}")
+
+#     try:
+#         video_id = ""
+
+#         if "v=" in url:
+#             video_id = url.split("v=")[1].split("&")[0]
+
+#         elif "youtu.be/" in url:
+#             video_id = url.split("youtu.be/")[1].split("?")[0]
+
+#         if not video_id:
+#             return []
+
+#         try:
+#             api = YouTubeTranscriptApi()
+#             transcript = await asyncio.to_thread(
+#                 api.fetch,
+#                 video_id
+#             )
+#             full_text = " ".join([item.text for item in transcript])
+#         except AttributeError:
+#             transcript = await asyncio.to_thread(
+#                 YouTubeTranscriptApi.get_transcript,
+#                 video_id
+#             )
+#             full_text = " ".join([item["text"] for item in transcript])
+
+#         full_text = re.sub(r"\s+", " ", full_text).strip()
+
+#         chunks = chunk_text(full_text, 500)
+
+#         return chunks[:10]
+
+#     except Exception as e:
+#         print(f"Error extracting YouTube transcript: {e}")
+#         return []
+
 async def scrape_youtube(url: str) -> list[str]:
-    print(f"Scraping YouTube: {url}")
+    video_id = ""
+    if "v=" in url:
+        video_id = url.split("v=")[1].split("&")[0]
+    elif "youtu.be/" in url:
+        video_id = url.split("youtu.be/")[1].split("?")[0]
 
-    try:
-        video_id = ""
+    if not video_id:
+        return []
 
-        if "v=" in url:
-            video_id = url.split("v=")[1].split("&")[0]
-
-        elif "youtu.be/" in url:
-            video_id = url.split("youtu.be/")[1].split("?")[0]
-
-        if not video_id:
-            return []
-
+    # Try transcript with language fallbacks
+    for lang in [["en"], ["en-US"], ["en-GB"], None]:
         try:
-            api = YouTubeTranscriptApi()
+            kwargs = {"languages": lang} if lang else {}
             transcript = await asyncio.to_thread(
-                api.fetch,
-                video_id
-            )
-            full_text = " ".join([item.text for item in transcript])
-        except AttributeError:
-            transcript = await asyncio.to_thread(
-                YouTubeTranscriptApi.get_transcript,
-                video_id
+                YouTubeTranscriptApi.get_transcript, video_id, **kwargs
             )
             full_text = " ".join([item["text"] for item in transcript])
+            full_text = re.sub(r"\s+", " ", full_text).strip()
+            return chunk_text(full_text, 500)[:10]
+        except Exception:
+            continue
 
-        full_text = re.sub(r"\s+", " ", full_text).strip()
-
-        chunks = chunk_text(full_text, 500)
-
-        return chunks[:10]
-
-    except Exception as e:
-        print(f"Error extracting YouTube transcript: {e}")
-        return []
+    print("All YouTube transcript attempts failed, skipping.")
+    return []  # Never crash, just skip
 
 async def scrape_spec(url: str) -> list[str]:
     print(f"Scraping Specs: {url}")
