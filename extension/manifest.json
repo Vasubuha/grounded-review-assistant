@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "RAG Product Assistant",
+  "name": "grounded-review-assistant",
   "version": "2.0",
   "description": "AI-powered RAG assistant with automatic product detection and side-panel integration for Amazon and Flipkart.",
 
