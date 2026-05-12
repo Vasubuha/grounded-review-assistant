@@ -4,6 +4,9 @@ from bs4 import BeautifulSoup
 import re
 from pydantic import json
 from youtube_transcript_api import YouTubeTranscriptApi
+import os
+import json
+from processing.normalization import normalize_product_name
 
 def fetch_html_text(url: str) -> str:
     req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'})

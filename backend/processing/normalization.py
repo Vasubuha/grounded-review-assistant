@@ -3,6 +3,7 @@ import json
 from langchain_groq import ChatGroq
 from langchain_core.prompts import ChatPromptTemplate
 from pydantic import BaseModel, Field
+import os
 
 class ProductInfo(BaseModel):
     brand: str = Field(description="Exact brand literal if present (e.g., vivo, samsung, apple).")
