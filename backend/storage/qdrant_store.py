@@ -23,10 +23,19 @@ def init_qdrant():
             ),
         )
 
-    # Always ensure the index exists (this operation is idempotent in Qdrant)
+    # Always ensure the indexes exist (this operation is idempotent in Qdrant)
     from qdrant_client.models import PayloadSchemaType
+    
+    # product_id index
     client.create_payload_index(
         collection_name=settings.QDRANT_COLLECTION_NAME,
         field_name="product_id",
+        field_schema=PayloadSchemaType.KEYWORD,
+    )
+    
+    # category index
+    client.create_payload_index(
+        collection_name=settings.QDRANT_COLLECTION_NAME,
+        field_name="category",
         field_schema=PayloadSchemaType.KEYWORD,
     )
