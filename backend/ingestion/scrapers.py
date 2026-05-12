@@ -2,6 +2,7 @@ import asyncio
 import urllib.request
 from bs4 import BeautifulSoup
 import re
+from pydantic import json
 from youtube_transcript_api import YouTubeTranscriptApi
 
 def fetch_html_text(url: str) -> str:
@@ -77,7 +78,12 @@ async def scrape_flipkart(url: str) -> list[str]:
 #         print(f"Error extracting YouTube transcript: {e}")
 #         return []
 
+import urllib.request
+import json
+
 async def scrape_youtube(url: str) -> list[str]:
+    print(f"Scraping YouTube: {url}")
+
     video_id = ""
     if "v=" in url:
         video_id = url.split("v=")[1].split("&")[0]
@@ -87,21 +93,30 @@ async def scrape_youtube(url: str) -> list[str]:
     if not video_id:
         return []
 
-    # Try transcript with language fallbacks
-    for lang in [["en"], ["en-US"], ["en-GB"], None]:
-        try:
-            kwargs = {"languages": lang} if lang else {}
-            transcript = await asyncio.to_thread(
-                YouTubeTranscriptApi.get_transcript, video_id, **kwargs
-            )
-            full_text = " ".join([item["text"] for item in transcript])
-            full_text = re.sub(r"\s+", " ", full_text).strip()
-            return chunk_text(full_text, 500)[:10]
-        except Exception:
-            continue
+    try:
+        api_url = f"https://api.supadata.ai/v1/youtube/transcript?url={url}&text=true"
+        req = urllib.request.Request(api_url, headers={
+            "x-api-key": os.getenv("SUPADATA_API_KEY", ""),
+            "User-Agent": "Mozilla/5.0"
+        })
+        response = await asyncio.to_thread(
+            lambda: urllib.request.urlopen(req, timeout=10).read()
+        )
+        data = json.loads(response)
 
-    print("All YouTube transcript attempts failed, skipping.")
-    return []  # Never crash, just skip
+        # Their response has "content" as a list of {text, offset, duration}
+        content = data.get("content", [])
+        if isinstance(content, list):
+            full_text = " ".join([item.get("text", "") for item in content])
+        else:
+            full_text = str(content)
+
+        full_text = re.sub(r"\s+", " ", full_text).strip()
+        return chunk_text(full_text, 500)[:10]
+
+    except Exception as e:
+        print(f"YouTube scrape failed: {e}")
+        return []
 
 async def scrape_spec(url: str) -> list[str]:
     print(f"Scraping Specs: {url}")
