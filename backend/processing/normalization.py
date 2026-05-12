@@ -12,11 +12,17 @@ class ProductInfo(BaseModel):
     ram: str = Field(description="RAM capacity literal (e.g., 8gb). Empty if none.")
     edition: str = Field(description="Special edition literal (e.g., pro, ultra, plus, fe). Empty if none.")
 
+INVALID_QUERY_SIGNALS = [
+    "online shopping", "shop online", "amazon", "flipkart",
+    "home page", "sign in", "buy online", "mobiles, books",
+]
+
 def normalize_product_name(raw_query: str) -> dict:
-    """
-    Extracts strictly literal, deterministic identity attributes from a raw query.
-    Removes semantic inference or synthetic family labels.
-    """
+    # Guard before hitting Groq API
+    lower = raw_query.lower()
+    if any(signal in lower for signal in INVALID_QUERY_SIGNALS) or len(raw_query.strip()) < 5:
+        raise ValueError(f"Incomplete product identity in query: {raw_query}")
+    
     llm = ChatGroq(model="llama-3.3-70b-versatile", temperature=0)
     
     prompt = ChatPromptTemplate.from_messages([

@@ -44,24 +44,36 @@ class ExtensionReviewRequest(BaseModel):
     url: str
     reviews: list
 
+INVALID_QUERY_SIGNALS = [
+    "online shopping", "shop online", "amazon", "flipkart",
+    "home page", "sign in", "buy online", "mobiles, books",
+]
+
+def is_valid_product_query(query: str) -> bool:
+    lower = query.lower()
+    # Too short or generic site title
+    if len(query.strip()) < 5:
+        return False
+    if any(signal in lower for signal in INVALID_QUERY_SIGNALS):
+        return False
+    return True
+
 @router.post("/ingest/reviews")
 async def ingest_reviews_from_extension(request: ExtensionReviewRequest, background_tasks: BackgroundTasks, db: Session = Depends(get_db)):
     if not request.product_query or not request.reviews:
         raise HTTPException(status_code=400, detail="Product query and reviews cannot be empty")
-        
+
+    # 👇 Add this check
+    if not is_valid_product_query(request.product_query):
+        raise HTTPException(
+            status_code=400,
+            detail=f"Invalid product query: '{request.product_query}'. Please provide a specific product name (e.g. 'iPhone 16e 128GB')."
+        )
+
     from ingestion.pipeline import process_structured_reviews
-    
-    # Run structured review ingestion in background
-    background_tasks.add_task(
-        process_structured_reviews, 
-        request.product_query, 
-        request.platform, 
-        request.url, 
-        request.reviews, 
-        db
-    )
-    
+    background_tasks.add_task(process_structured_reviews, request.product_query, request.platform, request.url, request.reviews, db)
     return {"message": f"Queued {len(request.reviews)} reviews for ingestion"}
+
 
 @router.post("/query")
 async def query_knowledge_graph(request: QueryRequest):
