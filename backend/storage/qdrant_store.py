@@ -22,3 +22,11 @@ def init_qdrant():
                 distance=Distance.COSINE,
             ),
         )
+
+    # Always ensure the index exists (this operation is idempotent in Qdrant)
+    from qdrant_client.models import PayloadSchemaType
+    client.create_payload_index(
+        collection_name=settings.QDRANT_COLLECTION_NAME,
+        field_name="product_id",
+        field_schema=PayloadSchemaType.KEYWORD,
+    )
