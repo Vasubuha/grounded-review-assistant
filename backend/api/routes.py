@@ -125,7 +125,7 @@ async def generate_chat(request: ChatRequest):
         from processing.normalization import normalize_product_name
         request.product_id = normalize_product_name(request.product_id)["id"]
         
-    from backend.retrieval.chat import generate_chat_response
+    from retrieval.chat import generate_chat_response
     
     # Generate synchronous chat response
     response_data = generate_chat_response(request.query, request.product_id)
