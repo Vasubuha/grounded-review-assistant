@@ -11,8 +11,12 @@ app = FastAPI(title="RAG Data Pipeline API", version="1.0.0")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://localhost:5174"],
-    allow_origin_regex=r"chrome-extension://.*",
+    allow_origins=[
+        "http://localhost:5173", 
+        "http://localhost:5174",
+        "https://grounded-review-assistant.vercel.app"
+    ],
+    allow_origin_regex=r"chrome-extension://.*|https://.*\.vercel\.app",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
