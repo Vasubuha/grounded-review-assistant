@@ -84,8 +84,12 @@ async def process_source(url: str, source_type: str, product_id: str, canonical_
 async def run_ingestion_pipeline_async(product_query: str, db: Session):
     print(f"Starting ingestion pipeline for: {product_query}")
     
-    # 1. Normalization
-    canonical_info = normalize_product_name(product_query)
+    try:
+        canonical_info = normalize_product_name(product_query)
+    except ValueError as e:
+        print(f"[Pipeline] Skipping invalid query: {e}")
+        return  # ← silent exit, no crash, no ASGI exception
+    
     product_id = canonical_info["id"]
     
     # Save/update product in DB
