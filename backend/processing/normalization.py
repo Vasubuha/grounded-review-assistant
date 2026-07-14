@@ -2,6 +2,7 @@ import hashlib
 import json
 from langchain_groq import ChatGroq
 from langchain_core.prompts import ChatPromptTemplate
+from numpy.strings import lower
 from pydantic import BaseModel, Field
 import os
 
@@ -14,8 +15,13 @@ class ProductInfo(BaseModel):
     edition: str = Field(description="Special edition literal (e.g., pro, ultra, plus, fe). Empty if none.")
 
 INVALID_QUERY_SIGNALS = [
-    "online shopping", "shop online", "amazon", "flipkart",
-    "home page", "sign in", "buy online", "mobiles, books",
+    "online shopping",
+    "shop online",
+    "flipkart",
+    "home page",
+    "sign in",
+    "buy online",
+    "mobiles, books",
 ]
 
 def normalize_product_name(raw_query: str) -> dict:
@@ -35,12 +41,12 @@ def normalize_product_name(raw_query: str) -> dict:
     
     try:
         result = chain.invoke({"text": raw_query})
-        
+
         # Reject partial names that lack specific model numbers
         if not result.brand or not result.model_number:
             print(f"Rejected partial product name: {raw_query}")
             raise ValueError(f"Incomplete product identity in query: {raw_query}")
-            
+
         parts = []
         if result.brand: parts.append(result.brand.strip().lower())
         if result.model_number: parts.append(result.model_number.strip().lower())
