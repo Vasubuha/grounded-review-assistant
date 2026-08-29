@@ -1,12 +1,10 @@
 {
   "manifest_version": 3,
   "name": "grounded-review-assistant",
-  "version": "2.0",
+  "version": "2.1",
   "description": "AI-powered RAG assistant with automatic product detection and side-panel integration for Amazon and Flipkart.",
 
   "permissions": [
-    "activeTab",
-    "scripting",
     "tabs",
     "storage",
     "sidePanel"
@@ -17,8 +15,7 @@
     "https://*.amazon.com/*",
     "https://*.amazon.co.in/*",
     "https://*.flipkart.com/*",
-    "https://grounded-review-assistant.onrender.com/*",
-    "https://grounded-review-assistant.vercel.app/*"
+    "https://grounded-review-assistant.onrender.com/*"
   ],
 
   "background": {
