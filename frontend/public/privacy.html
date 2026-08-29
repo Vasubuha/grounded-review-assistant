@@ -22,37 +22,46 @@
 
   <h1>Privacy Policy</h1>
 
-  <p>RAG Product Assistant does not collect, store, sell, or share personal user information.</p>
+  <p>RAG Product Assistant respects user privacy and handles data transparently in compliance with Chrome Web Store policies.</p>
 
-  <h2>Information Usage</h2>
+  <h2>Information Collection & Usage</h2>
   <p>
-    The extension temporarily accesses publicly visible product page content,
-    including product specifications and reviews from supported e-commerce websites,
-    only to provide AI-powered product analysis and question answering features.
+    The extension accesses and collects public product information from supported e-commerce websites (Amazon and Flipkart), including:
+  </p>
+  <ul>
+    <li>Product names, specifications, and public product page URLs.</li>
+    <li>Public customer reviews, star ratings, review dates, and public reviewer names.</li>
+  </ul>
+  <p>
+    This data is used solely to generate AI-powered product summaries, answer user questions, and perform grounded review analysis.
+  </p>
+  <p>
+    The extension does <strong>NOT</strong> collect user credentials, passwords, financial details, payment information, personal communications, or location data.
   </p>
 
-  <h2>Data Storage</h2>
+  <h2>Data Storage & Transmission</h2>
   <p>
-    The extension may store local settings and cached product data inside the user's browser
-    using Chrome storage APIs. No personal information is transmitted or sold to third parties.
+    <strong>Local Storage:</strong> The extension uses Chrome storage APIs (<code>chrome.storage.local</code>) to store application settings, active product names, and ingestion status locally in your browser.
   </p>
-
-  <h2>Third-Party Services</h2>
   <p>
-    The extension communicates with backend AI services and vector databases
-    required for product analysis functionality.
+    <strong>Backend & Third-Party Transmission:</strong> Product queries, page URLs, and public review text are transmitted securely to our backend service (<code>https://grounded-review-assistant.onrender.com</code>). To enable AI question answering, relevant context chunks are processed using third-party AI services (Groq API) and vector databases (Qdrant). Data is never sold to third parties or used for ad targeting.
   </p>
 
   <h2>Permissions</h2>
   <p>
-    The extension uses browser permissions such as activeTab, scripting, tabs,
-    storage, sidePanel, and host permissions only for extension functionality.
+    In version 2.1, the extension requests only minimal required permissions:
   </p>
+  <ul>
+    <li><code>tabs</code>: To detect when a user is actively viewing a product page on supported e-commerce domains.</li>
+    <li><code>storage</code>: To save application state and cached product metadata locally in the browser.</li>
+    <li><code>sidePanel</code>: To render the AI assistant UI alongside e-commerce product pages.</li>
+    <li><code>host_permissions</code>: Limited strictly to supported e-commerce domains (Amazon, Flipkart) and our backend service API.</li>
+  </ul>
 
   <h2>Contact</h2>
   <p>
     For questions regarding this privacy policy, contact:
-    vasubuha12@gmail.com
+    <a href="mailto:vasubuha12@gmail.com">vasubuha12@gmail.com</a>
   </p>
 
 </body>
